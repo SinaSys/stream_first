@@ -26,34 +26,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  final StreamController _streamController = StreamController();
-
-  addData()async{
+  Stream<int> numberStream() async*{
     for(int i = 1; i<= 10; i++) {
       await Future.delayed(Duration(seconds: 1));
-
-      _streamController.sink.add(i);
-    }
-  }
-
-/*  Stream<int> numberStream() async*{
-    for(int i = 1; i<= 10; i++) {
-      await Future.delayed(Duration(seconds: 1));
-
       yield i;
     }
-  }*/
-
-  @override
-  void dispose() {
-    super.dispose();
-    _streamController.close();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    addData();
   }
 
   @override
@@ -66,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
           child: StreamBuilder(
-            stream: _streamController.stream,
+            stream: numberStream(),
             builder: (context, snapshot){
               if(snapshot.hasError)
                 return Text("hey there is some error");
@@ -76,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           )
       ),
-
     );
   }
 }
