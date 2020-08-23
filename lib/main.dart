@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
           child: StreamBuilder(
-            stream: numberStream(),
+            stream: numberStream().where((number) => number%2==0),
             builder: (context, snapshot){
               if(snapshot.hasError)
                 return Text("hey there is some error");
